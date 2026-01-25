@@ -37,6 +37,30 @@ curl -fsSL https://raw.githubusercontent.com/jappyjan/nix-mac-setup/main/scripts
 - `./scripts/apply.sh` must be run with `sudo`
 - For new Macs, create a host file and add it to `flake.nix` before applying
 
+## Cursor config sync
+This repo can sync Cursor settings and extensions without Nix. The source-of-truth
+files live under `cursor/` and are linked into the Cursor config directory.
+
+### Setup
+```bash
+./scripts/cursor/sync-settings.sh
+./scripts/install-githooks.sh
+```
+
+### Extensions
+- Sync installed extensions to the repo list:
+  ```bash
+  ./scripts/cursor/sync-extensions.sh --refresh
+  ```
+- Apply the repo list to Cursor:
+  ```bash
+  ./scripts/cursor/sync-extensions.sh
+  ```
+
+### Hooks
+After running `./scripts/install-githooks.sh`, the repo installs `post-merge` and
+`post-checkout` hooks that auto-sync settings and extensions.
+
 ## Post-install manual steps
 - Authenticate in installed apps (Bitwarden, Google Drive, Discord, Signal, etc.)
 - For PWAs, `pwa-github` launches the GitHub PWA in Brave

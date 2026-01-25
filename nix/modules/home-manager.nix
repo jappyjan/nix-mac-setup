@@ -16,6 +16,7 @@
         oh-my-zsh = {
           enable = true;
           theme = "robbyrussell";
+          plugins = [ "git" ];
         };
         autosuggestion.enable = true;
         historySubstringSearch.enable = true;

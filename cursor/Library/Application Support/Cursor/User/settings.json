@@ -1,0 +1,12 @@
+{
+    "window.commandCenter": true,
+    "cursor.composer.usageSummaryDisplay": "always",
+    "window.autoDetectColorScheme": true,
+    "workbench.colorTheme": "Cursor Dark High Contrast",
+    "workbench.preferredDarkColorTheme": "Cursor Dark High Contrast",
+    "workbench.preferredLightColorTheme": "Default High Contrast Light",
+    "workbench.tips.enabled": false,
+    "workbench.tree.renderIndentGuides": "always",
+    "workbench.view.alwaysShowHeaderActions": true,
+    "remote.downloadExtensionsLocally": true
+}
