@@ -1,11 +1,11 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 let
   fzf-tab = pkgs.fetchFromGitHub {
     owner = "Aloxaf";
     repo = "fzf-tab";
     rev = "v1.2.0";
-    sha256 = "0000000000000000000000000000000000000000000000000000";
+    sha256 = "sha256-q26XVS/LcyZPRqDNwKKA9exgBByE0muyuNb0Bbar2lY=";
   };
 in
 {
@@ -21,15 +21,14 @@ in
 
       programs.zsh = {
         enable = true;
-        oh-my-zsh = {
-          enable = true;
-          theme = "robbyrussell";
-          plugins = [ "git" ];
-        };
-        autosuggestion.enable = true;
-        historySubstringSearch.enable = true;
-        initContent = ''
-          export PATH="/run/current-system/sw/bin:/run/current-system/sw/sbin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+        initContent = lib.mkMerge [
+          # Must run first (order 500) so Oh-My-Zsh finds custom plugins
+          (lib.mkOrder 500 ''
+            export ZSH_CUSTOM="$HOME/.config/oh-my-zsh-custom"
+          '')
+          (lib.mkOrder 1000 ''
+          # Nix user profile first (home.packages e.g. fzf) then system/homebrew
+          export PATH="$HOME/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:/run/current-system/sw/bin:/run/current-system/sw/sbin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
           export PATH="/opt/homebrew/opt/openjdk@21/bin:$PATH"
 
           export HISTFILE="$HOME/.zsh_history"
@@ -63,8 +62,27 @@ in
           load-nvmrc
 
           export SSH_AUTH_SOCK=/Users/jappy/Library/Containers/com.bitwarden.desktop/Data/.bitwarden-ssh-agent.sock
-        '';
+
+          # fzf-tab: modern full-black theme with vibrant accents
+          zstyle ':completion:*:descriptions' format '[%d]'
+          zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
+          zstyle ':completion:*' menu no
+          zstyle ':fzf-tab:*' fzf-flags --border=sharp --color=fg:#a0a0a0,bg:#0a0a0a,bg+:#1a1a1a,hl:#00d4ff,hl+:#00ff88,fg+:#ffffff,pointer:#00ff88,info:#5c5c5c,prompt:#ff79c6,spinner:#00d4ff,marker:#00ff88,header:#5c5c5c
+          '')
+        ];
+        oh-my-zsh = {
+          enable = true;
+          theme = "robbyrussell";
+          plugins = [ "git" "fzf-tab" ];
+        };
+        autosuggestion.enable = true;
+        historySubstringSearch.enable = true;
       };
+
+      home.packages = [ pkgs.fzf ];
+
+      # fzf-tab as Oh-My-Zsh custom plugin (clone to ZSH_CUSTOM/plugins/fzf-tab)
+      home.file.".config/oh-my-zsh-custom/plugins/fzf-tab".source = fzf-tab;
 
       programs.starship.enable = true;
 
