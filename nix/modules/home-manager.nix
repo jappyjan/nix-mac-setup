@@ -1,5 +1,13 @@
 { pkgs, ... }:
 
+let
+  fzf-tab = pkgs.fetchFromGitHub {
+    owner = "Aloxaf";
+    repo = "fzf-tab";
+    rev = "v1.2.0";
+    sha256 = "0000000000000000000000000000000000000000000000000000";
+  };
+in
 {
   home-manager = {
     useGlobalPkgs = true;
@@ -22,6 +30,7 @@
         historySubstringSearch.enable = true;
         initContent = ''
           export PATH="/run/current-system/sw/bin:/run/current-system/sw/sbin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+          export PATH="/opt/homebrew/opt/openjdk@21/bin:$PATH"
 
           export HISTFILE="$HOME/.zsh_history"
           export HISTSIZE=100000

@@ -9,6 +9,9 @@
       "mas"
       "supabase"
       "dockutil"
+      "platformio"
+      "openjdk@21"
+      "oven-sh/bun/bun"
     ];
 
     caskArgs = {
@@ -30,6 +33,7 @@
       "google-drive"
       "nvidia-geforce-now"
       "font-fira-code"
+      "figma"
     ];
 
     masApps = {

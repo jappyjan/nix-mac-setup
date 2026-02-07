@@ -25,11 +25,12 @@
 
     add_if_exists "/System/Applications/Finder.app"
     add_if_exists "/Applications/Brave Browser.app"
-    add_if_exists "/Applications/PWAs/Crunchyroll.app"
+    add_if_exists "/Users/jappy/Applications/Brave Browser Apps.localized/Crunchyroll.app"
     add_if_exists "/System/Applications/Mail.app"
     add_if_exists "/System/Applications/Calendar.app"
     add_if_exists "/System/Applications/Reminders.app"
-    add_if_exists "/Applications/PWAs/GitHub.app"
+    add_if_exists "/Users/jappy/Applications/Brave Browser Apps.localized/GitHub.app"
+    add_if_exists "/Users/jappy/Applications/Brave Browser Apps.localized/Invoice Ninja.app"
     add_if_exists "/Applications/Linear.app"
     add_if_exists "/Applications/Cursor.app"
     add_if_exists "/Applications/iTerm.app"
@@ -38,7 +39,7 @@
     add_if_exists "/System/Applications/Messages.app"
     add_if_exists "/Applications/Discord.app"
     add_if_exists "/Applications/Signal.app"
-    add_if_exists "/Applications/PWAs/SimplyPrint.app"
+    add_if_exists "/Users/jappy/Applications/Brave Browser Apps.localized/SimplyPrint.app"
     add_if_exists "/Applications/Bitwarden.app"
     run_dockutil --add "/Users/$primary_user/Downloads" --view grid --display stack --sort dateadded --no-restart
     /usr/bin/killall Dock

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   # Required by nix-darwin for stateful defaults
@@ -31,4 +31,9 @@
     home = "/Users/jappy";
     shell = pkgs.zsh;
   };
+
+  system.activationScripts.javaSymlink.text = lib.mkAfter ''
+    mkdir -p /Library/Java/JavaVirtualMachines
+    ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
+  '';
 }

@@ -6,10 +6,34 @@ export NIX_CONFIG="experimental-features = nix-command flakes"
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 HOSTNAME="$(scutil --get LocalHostName)"
 
-if [ ! -d "$REPO_DIR/nix/hosts" ] || [ ! -f "$REPO_DIR/nix/hosts/${HOSTNAME}.nix" ]; then
-  echo "No host config for ${HOSTNAME}."
-  echo "Create nix/hosts/${HOSTNAME}.nix and add it to flake.nix."
+if [ ! -d "$REPO_DIR/nix/hosts" ]; then
+  echo "No nix/hosts directory found."
   exit 1
+fi
+
+if [ ! -f "$REPO_DIR/nix/hosts/${HOSTNAME}.nix" ]; then
+  echo "No host config for ${HOSTNAME}."
+  echo "Select a host configuration to apply:"
+
+  mapfile -t HOST_FILES < <(ls -1 "$REPO_DIR/nix/hosts"/*.nix 2>/dev/null || true)
+  if [ "${#HOST_FILES[@]}" -eq 0 ]; then
+    echo "No host configs found in nix/hosts."
+    echo "Create nix/hosts/<host>.nix and add it to flake.nix."
+    exit 1
+  fi
+
+  HOST_CHOICES=()
+  for host_file in "${HOST_FILES[@]}"; do
+    HOST_CHOICES+=("$(basename "${host_file%.nix}")")
+  done
+
+  PS3="Host: "
+  select HOSTNAME in "${HOST_CHOICES[@]}"; do
+    if [ -n "${HOSTNAME:-}" ]; then
+      break
+    fi
+    echo "Invalid selection. Choose a number from the list."
+  done
 fi
 
 # Ensure nix is available in this shell

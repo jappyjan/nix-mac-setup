@@ -63,4 +63,3 @@ After running `./scripts/install-githooks.sh`, the repo installs `post-merge` an
 
 ## Post-install manual steps
 - Authenticate in installed apps (Bitwarden, Google Drive, Discord, Signal, etc.)
-- For PWAs, `pwa-github` launches the GitHub PWA in Brave
