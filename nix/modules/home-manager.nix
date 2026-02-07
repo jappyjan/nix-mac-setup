@@ -61,6 +61,8 @@ in
           add-zsh-hook chpwd load-nvmrc
           load-nvmrc
 
+          eval "$(zoxide init --cmd cd zsh)"
+
           export SSH_AUTH_SOCK=/Users/jappy/Library/Containers/com.bitwarden.desktop/Data/.bitwarden-ssh-agent.sock
 
           # fzf-tab: modern full-black theme with vibrant accents
@@ -79,7 +81,7 @@ in
         historySubstringSearch.enable = true;
       };
 
-      home.packages = [ pkgs.fzf ];
+      home.packages = [ pkgs.fzf pkgs.zoxide ];
 
       # fzf-tab as Oh-My-Zsh custom plugin (clone to ZSH_CUSTOM/plugins/fzf-tab)
       home.file.".config/oh-my-zsh-custom/plugins/fzf-tab".source = fzf-tab;
