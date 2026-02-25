@@ -19,6 +19,7 @@
     };
 
     casks = [
+      "tailscale-app"
       "brave-browser"
       "linear-linear"
       "cursor"
